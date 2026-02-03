@@ -1,9 +1,9 @@
 {
-  "title": "PlayStation Games",
+  "title": "OriginNull40's PSX",
   "props": {
     "psx_bios": [
-      "SCPH5500.BIN",
-      "SCPH5501.BIN"
+      "https://OriginNull40.github.io/powerschool.sandi.net/scph5500.bin",
+      "https://OriginNull40.github.io/powerschool.sandi.net/scph5501.bin"
     ]
   },
   "items": [

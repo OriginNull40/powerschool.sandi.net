@@ -1,9 +1,9 @@
 {
-  "title": "My Games",
+  "title": "My PSX Collection",
   "props": {
     "psx_bios": [
-      "../scph5500.bin",
-      "../scph5501.bin"
+      "https://OriginNull40.github.io/powerschool.sandi.net/scph5500.bin",
+      "https://OriginNull40.github.io/powerschool.sandi.net/scph5501.bin"
     ]
   },
   "items": [

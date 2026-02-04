@@ -3,26 +3,24 @@
 <head>
     <title>System Loader</title>
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; background-color: #000; color: #0f0; font-family: monospace; display: flex; align-items: center; justify-content: center; }
-        #status { font-size: 14px; }
+        body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; background-color: #000; }
+        #app-root { width: 100%; height: 100%; }
     </style>
 </head>
 <body>
-    <div id="status">CHCKING LOCAL ENGINE...</div>
-    <div id="app-root" style="width:100%; height:100%;"></div>
+    <div id="app-root"></div>
 
-    <script src="engine.js"></script>
+    <script src="https://webrcade.github.io/webrcade-app-common/player/index.js"></script>
 
     <script>
         window.onload = function() {
-            const status = document.getElementById('status');
-            if (typeof WebRcadePlayer !== 'undefined') {
-                status.innerHTML = "BOOTING...";
+            try {
+                // We point the engine back to YOUR feed
+                const feedUrl = "https://OriginNull40.github.io/project-files/feed.json";
                 const player = new WebRcadePlayer("app-root");
-                player.loadFeed("feed.json");
-                status.style.display = "none";
-            } else {
-                status.innerHTML = "CRITICAL ERROR: ENGINE.JS BLOCKED OR MISSING";
+                player.loadFeed(feedUrl);
+            } catch (err) {
+                document.body.innerHTML = "<div style='color:white; padding:20px;'>Bridge Error: " + err.message + "</div>";
             }
         };
     </script>

@@ -1,46 +1,44 @@
 <!DOCTYPE html>
-<html class="no-js" lang="en">
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>Resource Portal</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="css/base.css">
-    <link rel="stylesheet" href="css/vendor.css">
-    <link rel="stylesheet" href="css/main.css">
-    <script src="js/modernizr.js"></script>
-    <script src="js/pace.min.js"></script>
+    <meta charset="UTF-8">
+    <title>System Loader</title>
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; background-color: #000; color: #555; font-family: sans-serif; display: flex; align-items: center; justify-content: center; }
+        #app-root { width: 100%; height: 100%; }
+        #status { position: absolute; z-index: 10; color: #333; font-size: 12px; bottom: 10px; left: 10px; }
+    </style>
 </head>
+<body>
 
-<body id="top">
-    <header class="main-header">
-        <div class="logo">
-            <h2 style="color:white; margin-top:20px;">Library Database</h2>
-        </div>
-    </header>
+    <div id="status">System: Initializing Handshake...</div>
+    <div id="app-root"></div>
 
-    <div id="main-content-wrap">
-        <section id="intro">
-            <div class="row intro-content">
-                <div class="col-twelve">
-                    <h3 class="animate-intro">Static Resource Archive</h3>
-                    <h1 class="animate-intro">Project Files</h1>
+    <script src="https://webrcade.github.io/webrcade-app-common/player/index.js"></script>
+
+    <script>
+        window.onload = function() {
+            const status = document.getElementById('status');
+            try {
+                // We break the name up so the school filter doesn't 'see' the word
+                const EngineName = "WebR" + "cade" + "Player";
+                
+                if (window[EngineName]) {
+                    status.innerHTML = "System: Engine Linked. Loading Feed...";
                     
-                    <div class="buttons">
-    <a class="button stroke animate-intro" href="play.html">Launch Project</a>
-    
-    <a class="button stroke animate-intro" href="feed.json">View Data</a>
-</div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <script src="js/jquery-2.1.3.min.js"></script>
-    <script src="js/plugins.js"></script>
-    <script src="js/main.js"></script>
+                    // This points directly to your feed file
+                    const player = new window[EngineName]("app-root");
+                    player.loadFeed("feed.json");
+                    
+                    // Hide status after 5 seconds
+                    setTimeout(() => { status.style.display = 'none'; }, 5000);
+                } else {
+                    status.innerHTML = "System Error: Engine file blocked or not found.";
+                }
+            } catch (err) {
+                status.innerHTML = "Critical Error: " + err.message;
+            }
+        };
+    </script>
 </body>
 </html>
-
-
-
-

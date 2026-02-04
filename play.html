@@ -1,25 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Resource Viewer</title>
-    <meta charset="UTF-8">
+    <title>Project Viewer</title>
     <style>
         body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; background-color: #000; }
-        #container { width: 100%; height: 100%; }
+        iframe { width: 100%; height: 100%; border: none; }
     </style>
 </head>
 <body>
-    <div id="container"></div>
-
-    <script src="https://cdn.jsdelivr.net/npm/@webrcade/app-common@1.1.0/dist/index.min.js"></script>
-    
     <script>
-        window.onload = function() {
-            // This starts the player directly on YOUR page
-            // No redirects, no 404s, no "accessed URLs" that say webrcade.com
-            const player = new window.WebRcadePlayer("container");
-            player.loadFeed("https://OriginNull40.github.io/project-files/feed.json");
-        };
+        // This finds your repo name automatically so we don't have to type it
+        const path = window.location.pathname.split('/')[1];
+        const feed = "https://OriginNull40.github.io/" + path + "/feed.json";
+        const engine = "https://webrcade.github.io/webrcade-app-common/player/index.html?feed=" + encodeURIComponent(feed);
+        
+        // This builds the window
+        document.write('<iframe src="' + engine + '" style="width:100%; height:100vh; border:none;"></iframe>');
     </script>
 </body>
 </html>

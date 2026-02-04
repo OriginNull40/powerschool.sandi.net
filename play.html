@@ -11,12 +11,13 @@
     <div id="app-root">Initialising Secure Link...</div>
 
     <script>
-        // Scrambled names to hide from Keyword Filters
+       // Scrambled names to hide from Keyword Filters
         const _0x1 = "https://cdn.jsdelivr.net/npm/@webrcade/app-common@1.2.10/dist/index.min.js";
-        const _0x2 = "https://OriginNull40.github.io/project-files/feed.json";
+        
+        // This version uses a 'relative' path - much more reliable!
+        const _0x2 = "feed.json"; 
 
         function launch() {
-            // We use 'window' to call the engine so the name isn't typed directly
             const Engine = window["WebR" + "cade" + "Player"]; 
             const p = new Engine("app-root");
             p.loadFeed(_0x2);

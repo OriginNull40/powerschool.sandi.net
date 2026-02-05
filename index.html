@@ -1,44 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>System Loader</title>
+    <title>My Game Menu</title>
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; background-color: #000; color: #555; font-family: sans-serif; display: flex; align-items: center; justify-content: center; }
-        #app-root { width: 100%; height: 100%; }
-        #status { position: absolute; z-index: 10; color: #333; font-size: 12px; bottom: 10px; left: 10px; }
+        body { background: #111; color: white; text-align: center; font-family: sans-serif; padding-top: 50px; }
+        .launch-btn { 
+            background: #28a745; color: white; padding: 20px 40px; 
+            font-size: 24px; border: none; border-radius: 10px; cursor: pointer; 
+        }
+        .launch-btn:hover { background: #218838; }
     </style>
 </head>
 <body>
 
-    <div id="status">System: Initializing Handshake...</div>
-    <div id="app-root"></div>
+    <h1>WebRcade Project</h1>
+    <p>Click the button below to start the emulator.</p>
 
-    <script src="https://webrcade.github.io/webrcade-app-common/player/index.js"></script>
+    <button class="launch-btn" onclick="window.location.href='play.html'">
+        LAUNCH PLAYER
+    </button>
 
-    <script>
-        window.onload = function() {
-            const status = document.getElementById('status');
-            try {
-                // We break the name up so the school filter doesn't 'see' the word
-                const EngineName = "WebR" + "cade" + "Player";
-                
-                if (window[EngineName]) {
-                    status.innerHTML = "System: Engine Linked. Loading Feed...";
-                    
-                    // This points directly to your feed file
-                    const player = new window[EngineName]("app-root");
-                    player.loadFeed("feed.json");
-                    
-                    // Hide status after 5 seconds
-                    setTimeout(() => { status.style.display = 'none'; }, 5000);
-                } else {
-                    status.innerHTML = "System Error: Engine file blocked or not found.";
-                }
-            } catch (err) {
-                status.innerHTML = "Critical Error: " + err.message;
-            }
-        };
-    </script>
 </body>
 </html>

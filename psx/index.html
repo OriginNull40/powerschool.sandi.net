@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>PSX Fast Loader</title>
+    <title>PSX Recovery</title>
     <style>
-        body { margin: 0; background: #000; color: #0f0; font-family: monospace; display: flex; align-items: center; justify-content: center; height: 100vh; }
-        #status { text-align: center; }
-        canvas { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; }
+        body { margin:0; background:#000; color:#0f0; font-family:monospace; display:flex; align-items:center; justify-content:center; height:100vh; }
+        #status { text-align:center; }
+        canvas { position:absolute; top:0; left:0; width:100vw; height:100vh; }
     </style>
 </head>
 <body>
-    <div id="status">PULLING ENGINE FROM CLOUD...</div>
+    <div id="status">STARTING MEDNAFEN ENGINE...</div>
     <canvas id="canvas"></canvas>
 
     <script>
         var statusElement = document.getElementById('status');
         var Module = {
             canvas: document.getElementById('canvas'),
+            // We are NOT using the system folder, just the BIOS name
             arguments: ["scph5501.bin"],
             preRun: [function() {
-                statusElement.innerHTML = "INJECTING BIOS...";
-                // We still use YOUR BIOS from YOUR GitHub
+                statusElement.innerHTML = "LOADING BIOS...";
+                // This points directly to your BIOS file
                 Module.FS_createPreloadedFile("/", "scph5501.bin", "https://originnull40.github.io/project-files/scph5501.bin", true, false);
             }],
             postRun: [function() {
@@ -28,6 +29,6 @@
         };
     </script>
 
-    <script async src="https://webrcade.github.io/webrcade-app-common/v1/libretro/pcsx_rearmed_libretro.js"></script>
+    <script async src="mednafen_psx_libretro.js"></script>
 </body>
 </html>

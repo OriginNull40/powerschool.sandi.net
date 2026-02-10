@@ -1,38 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>PSX Final Test</title>
+    <title>PSX Light Loader</title>
     <style>
-        body { margin: 0; background: #000; color: #0f0; font-family: monospace; display: flex; align-items: center; justify-content: center; height: 100vh; overflow: hidden; }
-        #status { text-align: center; }
+        body { margin: 0; background: #000; color: #0f0; font-family: monospace; display: flex; align-items: center; justify-content: center; height: 100vh; }
+        #status { text-align: center; font-size: 20px; }
         canvas { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; }
     </style>
 </head>
 <body>
-    <div id="status">CONNECTING TO BIOS...</div>
-    <canvas id="canvas" oncontextmenu="event.preventDefault()"></canvas>
+    <div id="status">INITIALIZING LIGHTWEIGHT ENGINE...</div>
+    <canvas id="canvas"></canvas>
 
     <script>
         var statusElement = document.getElementById('status');
-        
         var Module = {
             canvas: document.getElementById('canvas'),
+            // We tell the engine to just look for the BIOS immediately
             arguments: ["scph5501.bin"],
             preRun: [function() {
-                statusElement.innerHTML = "DOWNLOADING SYSTEM BRAIN (512KB)...";
+                statusElement.innerHTML = "LOADING BIOS BRAIN...";
+                // Load BIOS into the root folder (no 'system' folder needed for this engine)
                 Module.FS_createPreloadedFile("/", "scph5501.bin", "https://originnull40.github.io/project-files/scph5501.bin", true, false);
             }],
             postRun: [function() {
                 statusElement.style.display = 'none';
             }],
-            print: function(text) { console.log(text); },
             printErr: function(text) {
-                statusElement.innerHTML = "ENGINE ERROR: " + text;
-                statusElement.style.color = "red";
+                if (text.includes("error")) {
+                    statusElement.innerHTML = "BOOT ERROR: " + text;
+                    statusElement.style.color = "red";
+                }
             }
         };
     </script>
 
-    <script async src="mednafen_psx_libretro.js"></script>
+    <script async src="pcsx_rearmed_libretro.js"></script>
 </body>
 </html>

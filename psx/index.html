@@ -1,30 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>System Test</title>
-    <style>body{margin:0;background:#000;color:#0f0;font-family:monospace;}canvas{width:100vw;height:100vh;}</style>
+    <title>PSX Final Test</title>
+    <style>
+        body { margin: 0; background: #000; color: #0f0; font-family: monospace; display: flex; align-items: center; justify-content: center; height: 100vh; overflow: hidden; }
+        #status { text-align: center; }
+        canvas { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; }
+    </style>
 </head>
 <body>
-    <div id="status">TESTING ENGINE...</div>
-    <canvas id="canvas"></canvas>
+    <div id="status">CONNECTING TO BIOS...</div>
+    <canvas id="canvas" oncontextmenu="event.preventDefault()"></canvas>
+
     <script>
         var statusElement = document.getElementById('status');
+        
         var Module = {
             canvas: document.getElementById('canvas'),
-            // We're telling the engine exactly where to look for the BIOS
-            arguments: ["-L", "mednafen_psx_libretro.so", "--system", "system"],
+            arguments: ["scph5501.bin"],
             preRun: [function() {
-                // Create the system folder
-                Module.FS_createFolder("/", "system", true, true);
-                // Load the BIOS directly into that folder
-                Module.FS_createPreloadedFile("/system", "scph5501.bin", "https://originnull40.github.io/project-files/scph5501.bin", true, false);
+                statusElement.innerHTML = "DOWNLOADING SYSTEM BRAIN (512KB)...";
+                Module.FS_createPreloadedFile("/", "scph5501.bin", "https://originnull40.github.io/project-files/scph5501.bin", true, false);
             }],
             postRun: [function() {
                 statusElement.style.display = 'none';
-                console.log("Engine Post-Run Complete");
-            }]
+            }],
+            print: function(text) { console.log(text); },
+            printErr: function(text) {
+                statusElement.innerHTML = "ENGINE ERROR: " + text;
+                statusElement.style.color = "red";
+            }
         };
     </script>
+
     <script async src="mednafen_psx_libretro.js"></script>
 </body>
 </html>
